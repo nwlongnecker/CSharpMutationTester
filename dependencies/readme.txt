@@ -1,1 +1,0 @@
-Committed binaries because I didn't find an easy way to retrieve them via package manager. I plan to come up with a better solution later.
