@@ -56,7 +56,7 @@ KILLED :		'killed' ;
 STILLBORN :		'stillborn' ;
 
 // The rest
-ID : 			LETTER (LETTER|DIGIT|'_')* ;
+ID : 			LETTER (LETTER|DIGIT|UNDERSCORE)* ;
 // Supposed to match any file or directory name
 FILEPATH :		(DIRNAME SLASH)* DIRNAME | (DIRNAME)* FILENAME ;
 DIRNAME :		((LETTER|DIGIT|UNDERSCORE)+ | (DOT | DOT DOT)) SLASH? ;

@@ -13,7 +13,9 @@ namespace Mut.Cli
                 return new MutActionBase();
             }
             var lexer = new MutatorLexer(new AntlrInputStream(command));
+            lexer.AddErrorListener(new MutLexerErrorListener());
             var parser = new MutatorParser(new CommonTokenStream(lexer));
+            parser.AddErrorListener(new MutParserErrorListener());
             var tree = parser.command();
             return tree.Accept(interpreter);
         }

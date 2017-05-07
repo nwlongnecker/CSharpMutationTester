@@ -5,26 +5,30 @@ namespace Mut.Interpreter.Actions
 {
     class MutActionBase
     {
-        List<object> arguments;
-        public MutActionBase(params object[] args)
+        List<MutActionBase> arguments;
+        public MutActionBase(params MutActionBase[] args)
         {
-            arguments = new List<object>(args);
+            arguments = new List<MutActionBase>(args);
         }
 
-        public virtual bool Execute()
+        public virtual ICollection<string> Execute()
         {
-            return true;
+            return new List<string>();
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder(GetType().Name);
-            builder.Append(' ');
+            builder.Append('(');
             foreach(var argument in arguments)
             {
                 builder.Append(argument.ToString());
-                builder.Append(' ');
+                builder.Append(',');
             }
+            if (arguments.Count > 0) {
+                builder.Remove(builder.Length - 1, 1);
+            }
+            builder.Append(')');
             return builder.ToString().TrimEnd();
         }
     }

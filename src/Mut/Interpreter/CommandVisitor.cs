@@ -1,6 +1,8 @@
 ﻿using System;
 using Antlr4.Runtime.Tree;
 using Mut.Interpreter.Actions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mut.Interpreter
 {
@@ -23,17 +25,23 @@ namespace Mut.Interpreter
 
         public MutActionBase VisitAddTest(MutatorParser.AddTestContext context)
         {
-            throw new NotImplementedException();
+            var fileList = context.fileList().Accept(this);
+            return new AddTestAction(fileList);
         }
 
         public MutActionBase VisitChildren(IRuleNode node)
         {
-            throw new NotImplementedException();
+            var actions = new List<MutActionBase>();
+            for (var i = 0; i < node.ChildCount; i++)
+            {
+                actions.Add(node.GetChild(i).Accept(this));
+            }
+            return new ActionList(actions.ToArray());
         }
 
         public MutActionBase VisitCommand(MutatorParser.CommandContext context)
         {
-            throw new NotImplementedException();
+            return VisitChildren(context);
         }
 
         public MutActionBase VisitErrorNode(IErrorNode node)
@@ -43,7 +51,9 @@ namespace Mut.Interpreter
 
         public MutActionBase VisitFileList(MutatorParser.FileListContext context)
         {
-            throw new NotImplementedException();
+            var filenames = context.FILEPATH().SelectMany(node => new[] { node.GetText() }).ToList<string>();
+            var symbols = context.SYMBOL().SelectMany(symbol => new[] { symbol.GetText() }).ToList<string>();
+            return new GetFileListAction(filenames, symbols);
         }
 
         public MutActionBase VisitIdList(MutatorParser.IdListContext context)
@@ -108,8 +118,8 @@ namespace Mut.Interpreter
 
         public MutActionBase VisitTest(MutatorParser.TestContext context)
         {
-            //context.fileList()
-            return new TestAction();
+            var fileList = context.fileList().Accept(this);
+            return new SetTestAction(fileList);
         }
 
         public MutActionBase VisitUse(MutatorParser.UseContext context)

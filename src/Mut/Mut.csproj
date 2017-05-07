@@ -63,10 +63,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cli\ExpressionEvaluator.cs" />
+    <Compile Include="Cli\MutatorLexerException.cs" />
+    <Compile Include="Cli\MutatorParserException.cs" />
+    <Compile Include="Cli\MutLexerErrorListener.cs" />
+    <Compile Include="Cli\MutParserErrorListener.cs" />
+    <Compile Include="Interpreter\Actions\ActionList.cs" />
+    <Compile Include="Interpreter\Actions\AddTestAction.cs" />
+    <Compile Include="Interpreter\Actions\GetFileListAction.cs" />
     <Compile Include="Interpreter\Actions\MutActionBase.cs" />
     <Compile Include="Interpreter\CommandVisitor.cs" />
     <Compile Include="Interpreter\InterpreterState.cs" />
-    <Compile Include="Interpreter\Actions\TestAction.cs" />
+    <Compile Include="Interpreter\Actions\SetTestAction.cs" />
     <Compile Include="Log\Output.cs" />
     <Compile Include="Cli\MutatorMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
