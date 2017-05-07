@@ -1,7 +1,7 @@
-﻿using Mut.ReplMode;
+﻿using Mut.Log;
 using System;
 
-namespace Mut
+namespace Mut.Cli
 {
     public class MutatorMain
     {

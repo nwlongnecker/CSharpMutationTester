@@ -45,9 +45,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Mut.MutatorMain</StartupObject>
+    <StartupObject>Mut.Cli.MutatorMain</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.Runtime.Standard, Version=4.7.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr4.Runtime.Standard.4.7.0\lib\net35\Antlr4.Runtime.Standard.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,13 +62,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\ExpressionEvaluator.cs" />
+    <Compile Include="Interpreter\Actions\MutActionBase.cs" />
+    <Compile Include="Interpreter\CommandVisitor.cs" />
+    <Compile Include="Interpreter\InterpreterState.cs" />
+    <Compile Include="Interpreter\Actions\TestAction.cs" />
     <Compile Include="Log\Output.cs" />
-    <Compile Include="MutatorMain.cs" />
+    <Compile Include="Cli\MutatorMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReplMode\Repl.cs" />
+    <Compile Include="Cli\Repl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -77,6 +87,13 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LexerParser\LexerParser.csproj">
+      <Project>{ca86e8ad-f991-4f36-9701-d187aabce2b5}</Project>
+      <Name>LexerParser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

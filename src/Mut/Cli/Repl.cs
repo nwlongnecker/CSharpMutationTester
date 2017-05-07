@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Mut.Interpreter;
+using Mut.Log;
+using System;
 using System.IO;
 
-namespace Mut.ReplMode
+namespace Mut.Cli
 {
     class Repl
     {
@@ -17,11 +19,12 @@ namespace Mut.ReplMode
         public void Start(bool shouldLoop = true)
         {
             string command = null;
+            var interpreter = new CommandVisitor(new InterpreterState());
             do
             {
                 // prompt the user for a command
                 @out.Prompt("> ");
-                // Read the command from standard in
+                // Read the command from the input stream
                 try
                 {
                     command = @in.ReadLine().Trim();
@@ -38,26 +41,18 @@ namespace Mut.ReplMode
                 {
                     break;
                 }
-                else if (string.IsNullOrWhiteSpace(command))
-                {
-                    continue;
-                }
+
                 // Otherwise, attempt to parse the command
-                @out.Info("Parsing input");
-                /*parser = LexerParserFactory.makeParser(new ANTLRInputStream(command));
                 try
                 {
-                    tree = parser.command();
-                    tree.accept(interpreter);
+                    var action = ExpressionEvaluator.SingleEval(command, interpreter);
+                    action.Execute();
                 }
                 catch (Exception e)
                 {
-                    System.err.flush();
-                    System.out.println(e.getMessage());
-                    if (!out.equals(System.out)) {
-					out.println(e.getMessage());
-                    }
-                }*/
+                    @out.Error(e.Message);
+                    @out.Error(e.StackTrace);
+                }
             } while (shouldLoop);
         }
     }

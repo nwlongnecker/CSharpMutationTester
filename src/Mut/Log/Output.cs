@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Mut
+namespace Mut.Log
 {
     public class Output
     {

@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr4.Runtime.Standard, Version=4.7.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f" />
     <Reference Include="nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -38,18 +39,26 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MutatorMainTests.cs" />
+    <Compile Include="Interpreter\CommandVisitorTests.cs" />
+    <Compile Include="Cli\MutatorMainTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReplMode\ReplTests.cs" />
+    <Compile Include="Cli\ReplTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LexerParser\LexerParser.csproj">
+      <Project>{ca86e8ad-f991-4f36-9701-d187aabce2b5}</Project>
+      <Name>LexerParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mut\Mut.csproj">
       <Project>{E74A2E9D-BDA8-42AF-892C-754EBC786F9B}</Project>
       <Name>Mut</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

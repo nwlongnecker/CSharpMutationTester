@@ -1,9 +1,10 @@
-﻿using Mut.ReplMode;
+﻿using Mut.Cli;
+using Mut.Log;
 using NUnit.Framework;
 using System;
 using System.IO;
 
-namespace Mut.Tests.ReplMode
+namespace Mut.Tests.Cli
 {
     class ReplTests
     {

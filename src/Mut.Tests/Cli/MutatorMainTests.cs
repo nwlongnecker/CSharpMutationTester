@@ -1,7 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Mut.Cli;
+using Mut.Log;
+using NUnit.Framework;
 using System.IO;
 
-namespace Mut.Tests
+namespace Mut.Tests.Cli
 {
     [TestFixture]
     public class MutatorMainTests
