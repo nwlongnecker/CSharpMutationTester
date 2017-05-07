@@ -1,4 +1,4 @@
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
+#tool nuget:?package=NUnit.ConsoleRunner&version=3.6.1
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
@@ -107,7 +107,8 @@ Task("Rebuild")
     .IsDependentOn("Build");
 
 Task("DirtyTest")
-    .Description("Run tests without rebuilding. Fast.")
+    .Description("Run tests without regenerating code. Fast.")
+    .IsDependentOn("DirtyBuild")
     .Does(() =>
 {
     NUnit3("./src/**/bin/" + configuration + "/*.Tests.dll", new NUnit3Settings {

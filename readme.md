@@ -10,7 +10,7 @@ Setup is completely scripted. **The setup process will install Chocolatey, NuGet
 1. Clone this repo: `git clone https://github.com/nwlongnecker/CSharpMutationTester.git`
 2. Open a powershell window as administrator and from the root of the repo run `./scripts/Bootstrap-Local.ps1`. You will need to confirm that you would like to install NuGet and Java if they are not already installed. The script will download all dependencies, generate necessary files, build the project, and run the tests.
 
-**Note:** The cake build utility is not simple to use via the commandline. Most cake solutions recommend creating a bootstrap powershell file that you use to simplify calling the cake interpreter. I didn't particularly like that solution, so instead I created an alias script that creates a simpler cli for cake under the alias `ck`.
+**Note:** The cake build utility is not simple to use via the command line. Most cake solutions recommend creating a bootstrap powershell file that you use to simplify calling the cake interpreter. I didn't particularly like that solution, so instead I created an alias script that creates a simpler cli for cake under the alias `ck`.
 
 Standard cake would require you to type `cake build.cake -target=build` to run the build task in the cakefile.
 

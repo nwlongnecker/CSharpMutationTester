@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexerParser", "src\LexerPar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mut", "src\Mut\Mut.csproj", "{E74A2E9D-BDA8-42AF-892C-754EBC786F9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mut.Tests", "src\Mut.Tests\Mut.Tests.csproj", "{3781D796-C6DA-48FF-A858-8BAD7270CEA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E74A2E9D-BDA8-42AF-892C-754EBC786F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E74A2E9D-BDA8-42AF-892C-754EBC786F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E74A2E9D-BDA8-42AF-892C-754EBC786F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3781D796-C6DA-48FF-A858-8BAD7270CEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3781D796-C6DA-48FF-A858-8BAD7270CEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3781D796-C6DA-48FF-A858-8BAD7270CEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3781D796-C6DA-48FF-A858-8BAD7270CEA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
