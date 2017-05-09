@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Antlr4 Include="grammars\Mutator.g4">
+    <Antlr4 Include="Grammars\Mutator.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>MutDSL.MutDSL.generated</CustomToolNamespace>
       <Listener>False</Listener>
@@ -57,10 +57,23 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="generated\MutatorBaseVisitor.cs" />
-    <Compile Include="generated\MutatorLexer.cs" />
-    <Compile Include="generated\MutatorParser.cs" />
-    <Compile Include="generated\MutatorVisitor.cs" />
+    <Compile Include="Generated\MutatorBaseVisitor.cs" />
+    <Compile Include="Generated\MutatorLexer.cs" />
+    <Compile Include="Generated\MutatorParser.cs" />
+    <Compile Include="Generated\MutatorVisitor.cs" />
+    <Compile Include="LexParse\CommandToMutASTConverter.cs" />
+    <Compile Include="LexParse\MutatorLexerException.cs" />
+    <Compile Include="LexParse\MutatorParserException.cs" />
+    <Compile Include="LexParse\MutLexerErrorListener.cs" />
+    <Compile Include="LexParse\MutParserErrorListener.cs" />
+    <Compile Include="MutAST\AbstractMutASTVisitor.cs" />
+    <Compile Include="MutAST\Nodes\ListSourceNode.cs" />
+    <Compile Include="MutAST\Nodes\ListTestNode.cs" />
+    <Compile Include="MutAST\Nodes\MutASTNode.cs" />
+    <Compile Include="MutAST\MutASTCreatorVisitor.cs" />
+    <Compile Include="MutAST\Nodes\NoopNode.cs" />
+    <Compile Include="MutAST\Nodes\ReportNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

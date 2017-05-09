@@ -1,7 +1,7 @@
 ﻿using Antlr4.Runtime;
 using System.IO;
 
-namespace Mut.Cli
+namespace LexerParser.LexParse
 {
     internal class MutLexerErrorListener : IAntlrErrorListener<int>
     {

@@ -17,7 +17,7 @@ var solutionFile = "./MutDSL.sln";
 
 var generatedDirs = GetDirectories("./src/*/bin")
                 .Concat(GetDirectories("./src/*/obj"))
-                .Concat(GetDirectories("./src/*/generated"));
+                .Concat(GetDirectories("./src/*/Generated"));
 
 var retrievedDirs = new Collection<DirectoryPath> {
         Directory("dependencies"),
@@ -30,8 +30,8 @@ var dependenciesDirectory = Directory("dependencies");
 var antlrFilePath = "./dependencies/antlr-4.7-complete.jar";
 
 var lexerParserProjectDir = "./src/LexerParser";
-var lexerParserOutputDir = lexerParserProjectDir + "/generated";
-var grammarFile = lexerParserProjectDir + "/grammars/Mutator.g4";
+var lexerParserOutputDir = lexerParserProjectDir + "/Generated";
+var grammarFile = lexerParserProjectDir + "/Grammars/Mutator.g4";
 
 //////////////////////////////////////////////////////////////////////
 // TASKS

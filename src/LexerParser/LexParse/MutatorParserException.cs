@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Mut.Cli
+namespace LexerParser.LexParse
 {
     [Serializable]
     internal class MutatorParserException : Exception
