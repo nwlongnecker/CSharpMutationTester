@@ -67,8 +67,7 @@
     <Compile Include="LexParse\MutLexerErrorListener.cs" />
     <Compile Include="LexParse\MutParserErrorListener.cs" />
     <Compile Include="MutAST\AbstractMutASTVisitor.cs" />
-    <Compile Include="MutAST\Nodes\ListSourceNode.cs" />
-    <Compile Include="MutAST\Nodes\ListTestNode.cs" />
+    <Compile Include="MutAST\Nodes\ListNode.cs" />
     <Compile Include="MutAST\Nodes\MutASTNode.cs" />
     <Compile Include="MutAST\MutASTCreatorVisitor.cs" />
     <Compile Include="MutAST\Nodes\NoopNode.cs" />

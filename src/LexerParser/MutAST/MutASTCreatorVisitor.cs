@@ -51,12 +51,12 @@ namespace MutDSL.MutAST
 
         public MutASTNode VisitListSource([NotNull] MutatorParser.ListSourceContext context)
         {
-            return new ListSourceNode();
+            return new ListNode(ListNode.ListType.SOURCE);
         }
 
         public MutASTNode VisitListTest([NotNull] MutatorParser.ListTestContext context)
         {
-            return new ListTestNode();
+            return new ListNode(ListNode.ListType.TEST);
         }
 
         public MutASTNode VisitMutate([NotNull] MutatorParser.MutateContext context)

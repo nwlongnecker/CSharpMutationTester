@@ -59,10 +59,10 @@ STILLBORN :		'stillborn' ;
 ID : 			LETTER (LETTER|DIGIT|UNDERSCORE)* ;
 // Supposed to match any file or directory name
 FILEPATH :		(DIRNAME SLASH)* DIRNAME | (DIRNAME)* FILENAME ;
-DIRNAME :		((LETTER|DIGIT|UNDERSCORE)+ | (DOT | DOT DOT)) SLASH? ;
-FILENAME : 		(LETTER|DIGIT|UNDERSCORE|DOT)+ ;
+DIRNAME :		((LETTER | DIGIT | UNDERSCORE)+ | (DOT | DOT DOT)) SLASH? ;
+FILENAME : 		(LETTER | DIGIT | UNDERSCORE | DOT)+ ;
 
-WS :			([ \t\r\n] | COMMENT)+ -> skip ;
+WHITESPACE :	([ \t\r\n] | COMMENT)+ -> skip ;
 COMMENT :		'#' .*? ('\n'|EOF) ;
 
 // Will probably change, should at least be able to match +, -, &&, ||, etc.

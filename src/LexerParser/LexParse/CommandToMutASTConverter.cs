@@ -13,12 +13,24 @@ namespace LexerParser.LexParse
                 return new NoopNode();
             }
             visitor = visitor ?? new MutASTCreatorVisitor();
-            var lexer = new MutatorLexer(new AntlrInputStream(command));
-            lexer.AddErrorListener(new MutLexerErrorListener());
-            var parser = new MutatorParser(new CommonTokenStream(lexer));
-            parser.AddErrorListener(new MutParserErrorListener());
+            var parser = BuildParser(command);
             var tree = parser.command();
             return tree.Accept(visitor);
+        }
+
+        internal static MutatorLexer BuildLexer(string command)
+        {
+            var lexer = new MutatorLexer(new AntlrInputStream(command));
+            lexer.AddErrorListener(new MutLexerErrorListener());
+            return lexer;
+        }
+
+        internal static MutatorParser BuildParser(string command)
+        {
+            var lexer = BuildLexer(command);
+            var parser = new MutatorParser(new CommonTokenStream(lexer));
+            parser.AddErrorListener(new MutParserErrorListener());
+            return parser;
         }
     }
 }

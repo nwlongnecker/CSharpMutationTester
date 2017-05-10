@@ -17,14 +17,14 @@ namespace LexerParser.Tests.MutAST
         public void TestListSource_CorrectTree()
         {
             var ast = CommandToMutASTConverter.Convert("list source");
-            Assert.AreEqual(new ListSourceNode(), ast);
+            Assert.AreEqual(new ListNode(ListNode.ListType.SOURCE), ast);
         }
 
         [Test]
         public void TestListTest_CorrectTree()
         {
             var ast = CommandToMutASTConverter.Convert("list test");
-            Assert.AreEqual(new ListTestNode(), ast);
+            Assert.AreEqual(new ListNode(ListNode.ListType.TEST), ast);
         }
 
         [Test]
