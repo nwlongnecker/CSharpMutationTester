@@ -23,9 +23,10 @@ listTest :		LIST TEST ;
 
 strain :		STRAIN ID mutate+ END ;
 
-mutate :		MUTATE (idList | symbolList TO symbolList) ;
+mutate :		MUTATE (mutatable TO mutatable | idList) ;
+mutatable :		symbolList | fileList | idList ;
 
-report :		REPORT (LAST | ALL) ((SURVIVED | KILLED | STILLBORN) | fileList)?;
+report :		REPORT (LAST | ALL)? ((SURVIVED | KILLED | STILLBORN) | fileList)?;
 
 idList :		ID (COMMA ID)* ;
 symbolList :	SYMBOL (COMMA SYMBOL)* ;

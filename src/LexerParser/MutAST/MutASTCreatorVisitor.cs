@@ -59,6 +59,11 @@ namespace MutDSL.MutAST
             return new ListNode(ListNode.ListType.TEST);
         }
 
+        public MutASTNode VisitMutatable([NotNull] MutatorParser.MutatableContext context)
+        {
+            throw new NotImplementedException();
+        }
+
         public MutASTNode VisitMutate([NotNull] MutatorParser.MutateContext context)
         {
             throw new NotImplementedException();
