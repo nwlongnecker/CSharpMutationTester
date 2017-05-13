@@ -3,25 +3,23 @@ grammar Mutator;
 // Parser rules
 mutFile : 		command* | EOF ;
 
-command :		source
-				| test
+command :		set
 				| use
 				| add
 				| remove
 				| list
-				| strain
+				| module
 				| mutate
 				| report ;
 
-source :		SOURCE COLON fileList ;
-test :			TEST COLON fileList ;
+set :			(SOURCE | TEST) COLON fileList ;
 use :			USE fileList ;
 
 add :			ADD (SOURCE | TEST) fileList ;
 remove :		REMOVE (SOURCE | TEST) fileList ;
 list :			LIST (SOURCE | TEST) ;
 
-strain :		STRAIN ID mutate+ END ;
+module :		MODULE ID mutate+ END ;
 
 mutate :		MUTATE (mutatable TO mutatable | idList) ;
 mutatable :		symbolList | fileList | idList ;
@@ -30,7 +28,7 @@ report :		REPORT (LAST | ALL)? ((SURVIVED | KILLED | STILLBORN) | fileList)?;
 
 idList :		ID (COMMA ID)* ;
 symbolList :	SYMBOL (COMMA SYMBOL)* ;
-fileList :		(FILEGLOB) (COMMA (FILEGLOB))* ;
+fileList :		FILEGLOB (COMMA FILEGLOB)* ;
 
 /* Lexical rules */
 
@@ -45,7 +43,7 @@ USE :			'use' ;
 ADD :			'add' ;
 REMOVE :		'remove' ;
 LIST :			'list' ;
-STRAIN :		'strain' ;
+MODULE :		'module' ;
 END :			'end' ;
 MUTATE :		'mutate' ;
 TO :			'to' ;

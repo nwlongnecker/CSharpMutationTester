@@ -81,9 +81,9 @@ namespace LexerParser.Tests.LexParse
         [Test]
         public void Strain_Lexes()
         {
-            var tokens = BuildLexer("strain").GetAllTokens();
+            var tokens = BuildLexer("module").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.STRAIN, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.MODULE, tokens.First().Type);
         }
 
         [Test]

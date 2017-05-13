@@ -2,16 +2,11 @@
 {
     public class ListNode : MutASTNode
     {
-        public enum ListType
-        {
-            SOURCE,
-            TEST
-        }
-        public ListType List_Type { get; }
+        public FileType ListType { get; }
 
-        public ListNode(ListType listType)
+        public ListNode(FileType listType)
         {
-            List_Type = listType;
+            ListType = listType;
         }
     }
 }

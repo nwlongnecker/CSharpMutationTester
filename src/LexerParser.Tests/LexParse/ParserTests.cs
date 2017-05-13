@@ -153,10 +153,10 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
-        public void StrainCommandSymbols_DoesNotThrow()
+        public void ModuleCommandSymbols_DoesNotThrow()
         {
             Assert.DoesNotThrow(() => {
-                BuildParser("strain addition mutate + to - mutate * to % end").command();
+                BuildParser("module addition mutate + to - mutate * to % end").command();
             });
         }
 

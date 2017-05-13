@@ -67,11 +67,18 @@
     <Compile Include="LexParse\MutLexerErrorListener.cs" />
     <Compile Include="LexParse\MutParserErrorListener.cs" />
     <Compile Include="MutAST\AbstractMutASTVisitor.cs" />
+    <Compile Include="MutAST\Nodes\FileType.cs" />
     <Compile Include="MutAST\Nodes\ListNode.cs" />
     <Compile Include="MutAST\Nodes\MutASTNode.cs" />
     <Compile Include="MutAST\MutASTCreatorVisitor.cs" />
+    <Compile Include="MutAST\Nodes\MutateNode.cs" />
     <Compile Include="MutAST\Nodes\NoopNode.cs" />
     <Compile Include="MutAST\Nodes\ReportNode.cs" />
+    <Compile Include="MutAST\Nodes\AddNode.cs" />
+    <Compile Include="MutAST\Nodes\RemoveNode.cs" />
+    <Compile Include="MutAST\Nodes\SetNode.cs" />
+    <Compile Include="MutAST\Nodes\MutateModulesNode.cs" />
+    <Compile Include="MutAST\Nodes\UseNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
