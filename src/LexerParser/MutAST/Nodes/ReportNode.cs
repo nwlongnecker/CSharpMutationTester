@@ -1,4 +1,6 @@
-﻿namespace MutDSL.MutAST.Nodes
+﻿using System.Collections.Generic;
+
+namespace MutDSL.MutAST.Nodes
 {
     public class ReportNode : MutASTNode
     {
@@ -8,10 +10,12 @@
             LAST
         }
         public ReportType Report_Type { get; }
+        public List<string> FileGlobs { get; }
 
-        public ReportNode(ReportType reportType)
+        public ReportNode(ReportType reportType, List<string> fileGlobs)
         {
             Report_Type = reportType;
+            FileGlobs = fileGlobs;
         }
     }
 }

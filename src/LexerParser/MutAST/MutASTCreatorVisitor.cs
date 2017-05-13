@@ -3,6 +3,7 @@ using Antlr4.Runtime.Tree;
 using LexerParser.LexParse;
 using MutDSL.MutAST.Nodes;
 using System;
+using System.Collections.Generic;
 
 namespace MutDSL.MutAST
 {
@@ -10,15 +11,10 @@ namespace MutDSL.MutAST
     {
         public MutASTNode Visit(IParseTree tree)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Behavior has not been defined for this node");
         }
 
-        public MutASTNode VisitAddSource([NotNull] MutatorParser.AddSourceContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MutASTNode VisitAddTest([NotNull] MutatorParser.AddTestContext context)
+        public MutASTNode VisitAdd([NotNull] MutatorParser.AddContext context)
         {
             throw new NotImplementedException();
         }
@@ -49,14 +45,14 @@ namespace MutDSL.MutAST
             throw new NotImplementedException();
         }
 
-        public MutASTNode VisitListSource([NotNull] MutatorParser.ListSourceContext context)
+        public MutASTNode VisitList([NotNull] MutatorParser.ListContext context)
         {
-            return new ListNode(ListNode.ListType.SOURCE);
-        }
-
-        public MutASTNode VisitListTest([NotNull] MutatorParser.ListTestContext context)
-        {
-            return new ListNode(ListNode.ListType.TEST);
+            var listType = ListNode.ListType.SOURCE;
+            if (context.TEST() != null)
+            {
+                listType = ListNode.ListType.TEST;
+            }
+            return new ListNode(listType);
         }
 
         public MutASTNode VisitMutatable([NotNull] MutatorParser.MutatableContext context)
@@ -74,25 +70,29 @@ namespace MutDSL.MutAST
             throw new NotImplementedException();
         }
 
-        public MutASTNode VisitRemoveSource([NotNull] MutatorParser.RemoveSourceContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MutASTNode VisitRemoveTest([NotNull] MutatorParser.RemoveTestContext context)
+        public MutASTNode VisitRemove([NotNull] MutatorParser.RemoveContext context)
         {
             throw new NotImplementedException();
         }
 
         public MutASTNode VisitReport([NotNull] MutatorParser.ReportContext context)
         {
-            // Default to only reporting the last test
-            var reportType = ReportNode.ReportType.LAST;
-            if (context.ALL() != null)
+            // Default to reporting all tests
+            var reportType = ReportNode.ReportType.ALL;
+            if (context.LAST() != null)
             {
-                reportType = ReportNode.ReportType.ALL;
+                reportType = ReportNode.ReportType.LAST;
             }
-            return new ReportNode(reportType);
+            var fileGlobList = new List<string>();
+            var fileContext = context.fileList();
+            if (fileContext != null)
+            {
+                foreach (var fileglob in fileContext.FILEGLOB())
+                {
+                    fileGlobList.Add(fileglob.GetText());
+                }
+            }
+            return new ReportNode(reportType, fileGlobList);
         }
 
         public MutASTNode VisitSource([NotNull] MutatorParser.SourceContext context)

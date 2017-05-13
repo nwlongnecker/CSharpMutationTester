@@ -1,5 +1,10 @@
 ﻿using Antlr4.Runtime.Tree;
+using System.Collections;
+using System.Linq;
 using System.Text;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace MutDSL.MutAST.Nodes
 {
@@ -18,16 +23,13 @@ namespace MutDSL.MutAST.Nodes
         public override bool Equals(object obj)
         {
             var type = GetType();
-            var isEqual = type.Equals(obj.GetType());
+            var isEqual = type.Equals(obj?.GetType());
             if (isEqual)
             {
                 var properties = type.GetProperties();
                 foreach (var property in properties)
                 {
-                    var myProperty = property.GetValue(this);
-                    var otherProperty = property.GetValue(obj);
-                    if (myProperty != null && !myProperty.Equals(otherProperty) ||
-                        myProperty == null && otherProperty != null)
+                    if (!PropertiesAreEqual(property, obj))
                     {
                         isEqual = false;
                         break;
@@ -35,6 +37,20 @@ namespace MutDSL.MutAST.Nodes
                 }
             }
             return isEqual;
+        }
+
+        private bool PropertiesAreEqual(PropertyInfo property, object otherObject)
+        {
+            var myProperty = property.GetValue(this);
+            var otherProperty = property.GetValue(otherObject);
+            // If one is null, objects are not equal
+            if (myProperty != null && otherProperty == null ||
+                myProperty == null && otherProperty != null)
+            {
+                return false;
+            }
+            return myProperty.Equals(otherProperty) ||
+                StringifyPropertyValue(myProperty).Equals(StringifyPropertyValue(otherProperty));
         }
 
         /// <summary>
@@ -53,13 +69,23 @@ namespace MutDSL.MutAST.Nodes
                 {
                     stringBuilder.Append(property.Name);
                     stringBuilder.Append(':');
-                    stringBuilder.Append(property.GetValue(this));
+                    stringBuilder.Append(StringifyPropertyValue(property.GetValue(this)));
                     stringBuilder.Append(',');
                 }
                 stringBuilder.Remove(stringBuilder.Length - 1, 1);
                 stringBuilder.Append('}');
             }
             return stringBuilder.ToString();
+        }
+
+        private string StringifyPropertyValue(object propertyValue)
+        {
+            var listValue = propertyValue as IList<string>;
+            if (listValue != null)
+            {
+                return '[' + string.Join(",", listValue) + ']';
+            }
+            return propertyValue?.ToString();
         }
     }
 }

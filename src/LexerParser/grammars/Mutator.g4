@@ -3,9 +3,12 @@ grammar Mutator;
 // Parser rules
 mutFile : 		command* | EOF ;
 
-command :		source | addSource | removeSource | listSource
-				| test | addTest   | removeTest   | listTest
+command :		source
+				| test
 				| use
+				| add
+				| remove
+				| list
 				| strain
 				| mutate
 				| report ;
@@ -14,12 +17,9 @@ source :		SOURCE COLON fileList ;
 test :			TEST COLON fileList ;
 use :			USE fileList ;
 
-addSource :		ADD SOURCE fileList ;
-removeSource :	REMOVE SOURCE fileList ;
-addTest :		ADD TEST fileList ;
-removeTest :	REMOVE TEST fileList ;
-listSource :	LIST SOURCE ;
-listTest :		LIST TEST ;
+add :			ADD (SOURCE | TEST) fileList ;
+remove :		REMOVE (SOURCE | TEST) fileList ;
+list :			LIST (SOURCE | TEST) ;
 
 strain :		STRAIN ID mutate+ END ;
 
@@ -64,8 +64,7 @@ FILEGLOB :		FILEGLOBBASE |
 				QUOTE FILEGLOBWSBASE QUOTE |
 				DOUBLEQUOTE FILEGLOBWSBASE DOUBLEQUOTE ;
 
-// Will probably change, should at least be able to match +, -, &&, ||, etc.
-// Language could/should be expanded to allow other types of mutations
+// Match anything from symbol like && or >= to a full regex
 SYMBOL :		(~[ \t\r\n#,:'"])+ |
 				QUOTE (~['])* QUOTE |
 				DOUBLEQUOTE (~["])* DOUBLEQUOTE ;
