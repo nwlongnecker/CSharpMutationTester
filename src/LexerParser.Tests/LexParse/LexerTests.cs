@@ -193,7 +193,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("myfile.txt").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("mydir/myfile.txt").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -209,7 +209,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("mydir/myfile").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("my_dir/mydir.2/my_file.txt").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("'myfile'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -233,7 +233,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("\"myfile.txt\"").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -241,15 +241,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("\"my_dir/mydir.2/my_file.txt\"").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
-        }
-
-        [Test]
-        public void IncorrectlyQuotedFilepath_Throws()
-        {
-            Assert.Throws<MutatorLexerException>(() => {
-                var tokens = BuildLexer("\"my_dir/mydir.2/\"my_file.txt\"\"").GetAllTokens();
-            });
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -266,7 +258,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("2").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -274,7 +266,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("'my file'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -282,7 +274,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("\"my file\"").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -290,7 +282,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("'a'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -298,7 +290,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("\".my_d r/myd r.2/my_f le.txt\"").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -306,7 +298,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("'.my_d r/myd r.2/'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -314,7 +306,7 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("'./m/'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
@@ -322,22 +314,69 @@ namespace LexerParser.Tests.LexParse
         {
             var tokens = BuildLexer("'.\\m\\'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
-        public void StartingWithNumber_LexesAsFilePath()
+        public void FilenameGlob_Lexes()
+        {
+            var tokens = BuildLexer("*.t?xt").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
+        }
+
+        [Test]
+        public void DirnameGlob_Lexes()
+        {
+            var tokens = BuildLexer("'*/*.txt'").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
+        }
+
+        [Test]
+        public void StartingWithNumber_LexesAsFileGlob()
         {
             var tokens = BuildLexer("23My_NotID").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEGLOB, tokens.First().Type);
         }
 
         [Test]
-        [Ignore("Temporary")]
         public void SymbolToken_Lexes()
         {
             var tokens = BuildLexer("%fasf").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.SYMBOL, tokens.First().Type);
+        }
+
+        [Test]
+        public void EmptyDoubleQuotedString_LexesAsSymbol()
+        {
+            var tokens = BuildLexer("\"\"").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.SYMBOL, tokens.First().Type);
+        }
+
+        [Test]
+        public void EmptyQuotedString_LexesAsSymbol()
+        {
+            var tokens = BuildLexer("''").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.SYMBOL, tokens.First().Type);
+        }
+
+        [Test]
+        public void DoubleQuotedSymbolCanContainSpecialChars_Lexes()
+        {
+            var tokens = BuildLexer("\"%f:,a.s$#f\"").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.SYMBOL, tokens.First().Type);
+        }
+
+        [Test]
+        public void QuotedSymbolCanContainSpecialChars_Lexes()
+        {
+            var tokens = BuildLexer("'%f:,a.s$#f'").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
             Assert.AreEqual(MutatorLexer.SYMBOL, tokens.First().Type);
         }

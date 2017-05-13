@@ -29,7 +29,7 @@ report :		REPORT (LAST | ALL) ((SURVIVED | KILLED | STILLBORN) | fileList)?;
 
 idList :		ID (COMMA ID)* ;
 symbolList :	SYMBOL (COMMA SYMBOL)* ;
-fileList :		(FILEPATH | SYMBOL) (COMMA (FILEPATH | SYMBOL))* ;
+fileList :		(FILEGLOB) (COMMA (FILEGLOB))* ;
 
 /* Lexical rules */
 
@@ -58,29 +58,29 @@ STILLBORN :		'stillborn' ;
 // The rest
 ID : 			LETTER (LETTER|DIGIT|UNDERSCORE)* ;
 // Match any file or directory name, with or without quotes and allowing spaces
-FILEPATH :		FILEPATHBASE |
-				QUOTE FILEPATHWSBASE QUOTE |
-				DOUBLEQUOTE FILEPATHWSBASE DOUBLEQUOTE ;
-fragment
-FILEPATHBASE :	(FILEPATHCHAR+ SLASH)* FILEPATHCHAR+ SLASH? ;
-fragment
-FILEPATHWSBASE:	(DIRNAMEWS SLASH)* DIRNAMEWS SLASH? ;
-fragment
-DIRNAMEWS :		FILEPATHCHAR |
-				FILEPATHCHAR (FILEPATHCHAR | SPACE)* FILEPATHCHAR ;
-fragment
-FILEPATHCHAR :	LETTER | DIGIT | UNDERSCORE | DOT ;
+// Matches a glob of files accepting * or ? as wildcard characters
+FILEGLOB :		FILEGLOBBASE |
+				QUOTE FILEGLOBWSBASE QUOTE |
+				DOUBLEQUOTE FILEGLOBWSBASE DOUBLEQUOTE ;
 
-//FILEGLOB :		FILEPATHBASE |
-//				QUOTE FILEPATHWSBASE QUOTE |
-//				DOUBLEQUOTE FILEPATHWSBASE DOUBLEQUOTE ;
+// Will probably change, should at least be able to match +, -, &&, ||, etc.
+// Language could/should be expanded to allow other types of mutations
+SYMBOL :		(~[ \t\r\n#,:'"])+ |
+				QUOTE (~['])* QUOTE |
+				DOUBLEQUOTE (~["])* DOUBLEQUOTE ;
 
 WHITESPACE :	([ \t\r\n] | COMMENT)+ -> skip ;
 COMMENT :		'#' .*? ('\n'|EOF) ;
 
-// Will probably change, should at least be able to match +, -, &&, ||, etc.
-// Language could/should be expanded to allow other types of mutations
-SYMBOL :		UNDERSCORE;//(~([ \t\r\n#,:]))+ ;
+fragment
+FILEGLOBBASE :	(FILEGLOBCHAR+ SLASH)* FILEGLOBCHAR+ SLASH? ;
+fragment
+FILEGLOBWSBASE:	(DIRNAMEWS SLASH)* DIRNAMEWS SLASH? ;
+fragment
+DIRNAMEWS :		FILEGLOBCHAR |
+				FILEGLOBCHAR (FILEGLOBCHAR | SPACE)* FILEGLOBCHAR ;
+fragment
+FILEGLOBCHAR :	LETTER | DIGIT | UNDERSCORE | DOT | STAR | QUESTION ;
 
 fragment
 UNDERSCORE :	'_' ;
@@ -96,6 +96,8 @@ fragment
 DOUBLEQUOTE :	'"' ;
 fragment
 SPACE :			' ' ;
+fragment
+QUESTION :		'?' ;
 
 fragment
 LETTER :		[A-Za-z] ;
