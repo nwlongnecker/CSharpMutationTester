@@ -57,26 +57,45 @@ STILLBORN :		'stillborn' ;
 
 // The rest
 ID : 			LETTER (LETTER|DIGIT|UNDERSCORE)* ;
-// Supposed to match any file or directory name
-FILEPATH :		(DIRNAME SLASH)* DIRNAME | (DIRNAME)* FILENAME ;
-DIRNAME :		((LETTER | DIGIT | UNDERSCORE)+ | (DOT | DOT DOT)) SLASH? ;
-FILENAME : 		(LETTER | DIGIT | UNDERSCORE | DOT)+ ;
+// Match any file or directory name, with or without quotes and allowing spaces
+FILEPATH :		FILEPATHBASE |
+				QUOTE FILEPATHWSBASE QUOTE |
+				DOUBLEQUOTE FILEPATHWSBASE DOUBLEQUOTE ;
+fragment
+FILEPATHBASE :	(FILEPATHCHAR+ SLASH)* FILEPATHCHAR+ SLASH? ;
+fragment
+FILEPATHWSBASE:	(DIRNAMEWS SLASH)* DIRNAMEWS SLASH? ;
+fragment
+DIRNAMEWS :		FILEPATHCHAR |
+				FILEPATHCHAR (FILEPATHCHAR | SPACE)* FILEPATHCHAR ;
+fragment
+FILEPATHCHAR :	LETTER | DIGIT | UNDERSCORE | DOT ;
+
+//FILEGLOB :		FILEPATHBASE |
+//				QUOTE FILEPATHWSBASE QUOTE |
+//				DOUBLEQUOTE FILEPATHWSBASE DOUBLEQUOTE ;
 
 WHITESPACE :	([ \t\r\n] | COMMENT)+ -> skip ;
 COMMENT :		'#' .*? ('\n'|EOF) ;
 
 // Will probably change, should at least be able to match +, -, &&, ||, etc.
 // Language could/should be expanded to allow other types of mutations
-SYMBOL :		(~([ \t\r\n#,:]))+ ;
+SYMBOL :		UNDERSCORE;//(~([ \t\r\n#,:]))+ ;
 
 fragment
 UNDERSCORE :	'_' ;
 fragment
 DOT :			'.' ;
 fragment
-SLASH :			'/' ;
+SLASH :			'/' | '\\' ;
 fragment
 STAR :			'*' ;
+fragment
+QUOTE :			'\'' ;
+fragment
+DOUBLEQUOTE :	'"' ;
+fragment
+SPACE :			' ' ;
 
 fragment
 LETTER :		[A-Za-z] ;

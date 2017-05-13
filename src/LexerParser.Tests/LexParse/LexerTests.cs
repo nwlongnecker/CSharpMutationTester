@@ -1,6 +1,7 @@
 ﻿using static LexerParser.LexParse.CommandToMutASTConverter;
 using NUnit.Framework;
 using System.Linq;
+using LexerParser.LexParse;
 
 namespace LexerParser.Tests.LexParse
 {
@@ -180,6 +181,22 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
+        public void FilepathNoDirsNoExtension_LexesAsId()
+        {
+            var tokens = BuildLexer("hosts").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.ID, tokens.First().Type);
+        }
+
+        [Test]
+        public void FilepathNoDirs_Lexes()
+        {
+            var tokens = BuildLexer("myfile.txt").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
         public void Filepath_Lexes()
         {
             var tokens = BuildLexer("mydir/myfile.txt").GetAllTokens();
@@ -204,6 +221,22 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
+        public void SingleQuotedFilepathNoDirs_Lexes()
+        {
+            var tokens = BuildLexer("'myfile'").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
+        public void DoubleQuotedFilepathNoDirs_Lexes()
+        {
+            var tokens = BuildLexer("\"myfile.txt\"").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
         public void DoubleQuotedFilepath_Lexes()
         {
             var tokens = BuildLexer("\"my_dir/mydir.2/my_file.txt\"").GetAllTokens();
@@ -212,17 +245,26 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
-        public void DoubleQuotedFilepathSpaces_Lexes()
+        public void IncorrectlyQuotedFilepath_Throws()
         {
-            var tokens = BuildLexer("\"my_d r/myd r.2/my_f le.txt\"").GetAllTokens();
-            Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+            Assert.Throws<MutatorLexerException>(() => {
+                var tokens = BuildLexer("\"my_dir/mydir.2/\"my_file.txt\"\"").GetAllTokens();
+            });
         }
 
         [Test]
-        public void SingleQuotedFilepathNoDirs_Lexes()
+        public void FilepathNoQuotes_LexesAsTwoTokens()
         {
-            var tokens = BuildLexer("'myfile'").GetAllTokens();
+            var tokens = BuildLexer("my file").GetAllTokens();
+            Assert.AreEqual(2, tokens.Count);
+            Assert.AreEqual(MutatorLexer.ID, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.ID, tokens.Last().Type);
+        }
+
+        [Test]
+        public void SingleCharFilename_Lexes()
+        {
+            var tokens = BuildLexer("2").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
             Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
         }
@@ -236,11 +278,51 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
-        public void FilepathNoDirsNoExtension_LexesAsId()
+        public void DoubleQuotedFilepathNoDirsSpaces_Lexes()
         {
-            var tokens = BuildLexer("hosts").GetAllTokens();
+            var tokens = BuildLexer("\"my file\"").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.ID, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
+        public void SingleQuotedSingleCharFilepath_Lexes()
+        {
+            var tokens = BuildLexer("'a'").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
+        public void DoubleQuotedFilepathSpaces_Lexes()
+        {
+            var tokens = BuildLexer("\".my_d r/myd r.2/my_f le.txt\"").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
+        public void SingleQuotedFilepathSpaces_Lexes()
+        {
+            var tokens = BuildLexer("'.my_d r/myd r.2/'").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
+        public void SingleCharQuotedDirnameFilepath_Lexes()
+        {
+            var tokens = BuildLexer("'./m/'").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
+        }
+
+        [Test]
+        public void BackslashesInDirname_Lexes()
+        {
+            var tokens = BuildLexer("'.\\m\\'").GetAllTokens();
+            Assert.AreEqual(1, tokens.Count);
+            Assert.AreEqual(MutatorLexer.FILEPATH, tokens.First().Type);
         }
 
         [Test]
@@ -252,6 +334,7 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
+        [Ignore("Temporary")]
         public void SymbolToken_Lexes()
         {
             var tokens = BuildLexer("%fasf").GetAllTokens();
