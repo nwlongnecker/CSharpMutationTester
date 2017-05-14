@@ -9,5 +9,7 @@ namespace MutDSL.MutAST
         {
             throw new NotImplementedException("Visit method not implemented on " + this.GetType() + " for " + mutASTNode.GetType());
         }
+
+        public abstract T Visit(AddNode node);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MutDSL.MutAST.Nodes
+﻿using System;
+
+namespace MutDSL.MutAST.Nodes
 {
     public class ListNode : MutASTNode
     {
@@ -7,6 +9,11 @@
         public ListNode(FileType listType)
         {
             ListType = listType;
+        }
+
+        public override T Accept<T>(AbstractMutASTVisitor<T> visitor)
+        {
+            return visitor.Visit(this);
         }
     }
 }

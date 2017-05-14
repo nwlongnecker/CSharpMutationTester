@@ -1,4 +1,4 @@
-﻿using LexerParser.LexParse;
+﻿using static LexerParser.LexParse.CommandToMutAST;
 using MutDSL.MutAST;
 using MutDSL.MutAST.Nodes;
 using NUnit.Framework;
@@ -11,49 +11,49 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void TestWhitespace_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform(" ");
+            var ast = Transform(" ");
             Assert.AreEqual(new NoopNode(), ast);
         }
 
         [Test]
         public void TestListSource_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("list source");
+            var ast = Transform("list source");
             Assert.AreEqual(new ListNode(FileType.SOURCE), ast);
         }
 
         [Test]
         public void TestListTest_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("list test");
+            var ast = Transform("list test");
             Assert.AreEqual(new ListNode(FileType.TEST), ast);
         }
 
         [Test]
         public void TestReportLast_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("report last");
+            var ast = Transform("report last");
             Assert.AreEqual(new ReportNode(ReportNode.ReportType.LAST, new List<string>()), ast);
         }
 
         [Test]
         public void TestReportAll_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("report all");
+            var ast = Transform("report all");
             Assert.AreEqual(new ReportNode(ReportNode.ReportType.ALL, new List<string>()), ast);
         }
 
         [Test]
         public void TestReport_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("report");
+            var ast = Transform("report");
             Assert.AreEqual(new ReportNode(ReportNode.ReportType.ALL, new List<string>()), ast);
         }
 
         [Test]
         public void TestReportFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("report src/*,*.cs");
+            var ast = Transform("report src/*,*.cs");
             var fileGlob = new List<string> { "src/*", "*.cs" };
             Assert.AreEqual(new ReportNode(ReportNode.ReportType.ALL, fileGlob), ast);
         }
@@ -61,7 +61,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void SetSourceFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("source: .\\src/*/*.cs");
+            var ast = Transform("source: .\\src/*/*.cs");
             var fileGlob = new List<string> { ".\\src/*/*.cs" };
             Assert.AreEqual(new SetNode(FileType.SOURCE, fileGlob), ast);
         }
@@ -69,7 +69,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void SetTestFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("test: .\\test/*/*Test.cs");
+            var ast = Transform("test: .\\test/*/*Test.cs");
             var fileGlob = new List<string> { ".\\test/*/*Test.cs" };
             Assert.AreEqual(new SetNode(FileType.TEST, fileGlob), ast);
         }
@@ -77,7 +77,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void UseFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("use strains/*,*.mut");
+            var ast = Transform("use strains/*,*.mut");
             var fileGlob = new List<string> { "strains/*", "*.mut" };
             Assert.AreEqual(new UseNode(fileGlob), ast);
         }
@@ -85,7 +85,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void AddSourceFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("add source \"src.cs\",'src2.js'");
+            var ast = Transform("add source \"src.cs\",'src2.js'");
             var fileGlob = new List<string> { "\"src.cs\"", "'src2.js'" };
             Assert.AreEqual(new AddNode(FileType.SOURCE, fileGlob), ast);
         }
@@ -93,7 +93,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void AddTestFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("add test \"tst.cs\",'tst2.js'");
+            var ast = Transform("add test \"tst.cs\",'tst2.js'");
             var fileGlob = new List<string> { "\"tst.cs\"", "'tst2.js'" };
             Assert.AreEqual(new AddNode(FileType.TEST, fileGlob), ast);
         }
@@ -101,7 +101,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void RemoveSourceFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("remove source \"src.cs\",'src2.js'");
+            var ast = Transform("remove source \"src.cs\",'src2.js'");
             var fileGlob = new List<string> { "\"src.cs\"", "'src2.js'" };
             Assert.AreEqual(new RemoveNode(FileType.SOURCE, fileGlob), ast);
         }
@@ -109,7 +109,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void RemoveTestFileList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("remove test \"tst.cs\",'tst2.js'");
+            var ast = Transform("remove test \"tst.cs\",'tst2.js'");
             var fileGlob = new List<string> { "\"tst.cs\"", "'tst2.js'" };
             Assert.AreEqual(new RemoveNode(FileType.TEST, fileGlob), ast);
         }
@@ -117,7 +117,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void MutateIdList_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("mutate id1,id2,a,b,c");
+            var ast = Transform("mutate id1,id2,a,b,c");
             var moduleIds = new List<string> { "id1", "id2", "a", "b", "c" };
             Assert.AreEqual(new MutateModulesNode(moduleIds), ast);
         }
@@ -125,7 +125,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void MutateIDMutatablesToOtherMutatables_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("mutate a23 to b23");
+            var ast = Transform("mutate a23 to b23");
             var mutateFromSymbols = new List<string> { "a23" };
             var mutateToSymbols = new List<string> { "b23" };
             Assert.AreEqual(new MutateNode(mutateFromSymbols, mutateToSymbols), ast);
@@ -134,7 +134,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void MutateFileMutatablesToOtherMutatables_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("mutate \"a23\" to 'b23'");
+            var ast = Transform("mutate \"a23\" to 'b23'");
             var mutateFromSymbols = new List<string> { "\"a23\"" };
             var mutateToSymbols = new List<string> { "'b23'" };
             Assert.AreEqual(new MutateNode(mutateFromSymbols, mutateToSymbols), ast);
@@ -143,7 +143,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void MutateSymbolMutatablesToOtherMutatables_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("mutate ++,'--' to \"++\",--");
+            var ast = Transform("mutate ++,'--' to \"++\",--");
             var mutateFromSymbols = new List<string> { "++", "'--'" };
             var mutateToSymbols = new List<string> { "\"++\"", "--" };
             Assert.AreEqual(new MutateNode(mutateFromSymbols, mutateToSymbols), ast);
@@ -152,7 +152,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void Module_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("module asdf mutate ++,'--' to \"++\",-- end");
+            var ast = Transform("module asdf mutate ++,'--' to \"++\",-- end");
             var mutateFromSymbols = new List<string> { "++", "'--'" };
             var mutateToSymbols = new List<string> { "\"++\"", "--" };
             var mutateNodes = new List<MutASTNode> {
@@ -165,7 +165,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void ModuleMutlipleMutations_CorrectTree()
         {
-            var ast = CommandToMutASTConverter.Transform("module asdf2 mutate ++,'--' to \"++\",-- mutate a,b,c end");
+            var ast = Transform("module asdf2 mutate ++,'--' to \"++\",-- mutate a,b,c end");
             var mutateFromSymbols = new List<string> { "++", "'--'" };
             var mutateToSymbols = new List<string> { "\"++\"", "--" };
             var mutateIds = new List<string> { "a", "b", "c" };
@@ -181,7 +181,7 @@ namespace LexerParser.Tests.MutAST
         public void MutFileMutlipleCommands_CorrectTree()
         {
             var mutFileText = "add test \"tst.cs\",'tst2.js' list test";
-            var parser = CommandToMutASTConverter.BuildParser(mutFileText);
+            var parser = BuildParser(mutFileText);
             var tree = parser.mutFile();
             var ast = tree.Accept(new MutASTCreatorVisitor());
 

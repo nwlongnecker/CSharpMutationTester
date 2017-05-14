@@ -10,10 +10,7 @@ namespace MutDSL.MutAST.Nodes
 {
     public abstract class MutASTNode
     {
-        public T Accept<T>(AbstractMutASTVisitor<T> visitor)
-        {
-            return visitor.Visit(this);
-        }
+        public abstract T Accept<T>(AbstractMutASTVisitor<T> visitor);
         
         /// <summary>
         /// Use reflection to deep compare each of the public properties
@@ -54,7 +51,7 @@ namespace MutDSL.MutAST.Nodes
         }
 
         /// <summary>
-        /// Uses reflection to print the properties and values of the node in json-style format
+        /// Uses reflection to print the properties and values of the node in json-similar format
         /// </summary>
         /// <returns>A string representation of the object and its properties</returns>
         public override string ToString()

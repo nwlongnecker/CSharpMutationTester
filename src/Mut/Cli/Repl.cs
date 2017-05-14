@@ -1,5 +1,5 @@
-﻿using LexerParser.LexParse;
-using Mut.Interpreter;
+﻿using Interpreter.State;
+using LexerParser.LexParse;
 using Mut.Log;
 using System;
 using System.IO;
@@ -20,7 +20,7 @@ namespace Mut.Cli
         public void Start(bool shouldLoop = true)
         {
             string command = null;
-            var interpreter = new CommandVisitor();
+            var interpreter = new MutASTVisitor(new InterpreterState());
             do
             {
                 // prompt the user for a command
@@ -46,7 +46,7 @@ namespace Mut.Cli
                 // Otherwise, attempt to parse the command
                 try
                 {
-                    var ast = CommandToMutASTConverter.Transform(command);
+                    var ast = CommandToMutAST.Transform(command);
                     ast.Accept(interpreter);
                 }
                 catch (Exception e)

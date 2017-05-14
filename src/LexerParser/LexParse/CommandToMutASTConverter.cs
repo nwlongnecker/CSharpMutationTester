@@ -4,7 +4,7 @@ using MutDSL.MutAST.Nodes;
 
 namespace LexerParser.LexParse
 {
-    public class CommandToMutASTConverter
+    public class CommandToMutAST
     {
         public static MutASTNode Transform(string command, IMutatorVisitor<MutASTNode> visitor = null)
         {

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mut.Tests", "src\Mut.Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexerParser.Tests", "src\LexerParser.Tests\LexerParser.Tests.csproj", "{D209F25A-F1E0-442A-B7B5-C8CE78446D3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interpreter", "src\Interpreter\Interpreter.csproj", "{70C9C77B-AC29-472F-A1EC-C760971069E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interpreter.Tests", "src\Interpreter.Tests\Interpreter.Tests.csproj", "{228C3F6E-EEA3-4BD9-A606-A1A1984F9817}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{D209F25A-F1E0-442A-B7B5-C8CE78446D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D209F25A-F1E0-442A-B7B5-C8CE78446D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D209F25A-F1E0-442A-B7B5-C8CE78446D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C9C77B-AC29-472F-A1EC-C760971069E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C9C77B-AC29-472F-A1EC-C760971069E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C9C77B-AC29-472F-A1EC-C760971069E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C9C77B-AC29-472F-A1EC-C760971069E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{228C3F6E-EEA3-4BD9-A606-A1A1984F9817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{228C3F6E-EEA3-4BD9-A606-A1A1984F9817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{228C3F6E-EEA3-4BD9-A606-A1A1984F9817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{228C3F6E-EEA3-4BD9-A606-A1A1984F9817}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

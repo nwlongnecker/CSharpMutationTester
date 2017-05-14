@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MutDSL.MutAST.Nodes
 {
@@ -11,6 +12,11 @@ namespace MutDSL.MutAST.Nodes
         {
             Id = id;
             Mutations = mutations;
+        }
+
+        public override T Accept<T>(AbstractMutASTVisitor<T> visitor)
+        {
+            return visitor.Visit(this);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using LexerParser.LexParse;
-using static LexerParser.LexParse.CommandToMutASTConverter;
+using static LexerParser.LexParse.CommandToMutAST;
 using NUnit.Framework;
 
 namespace LexerParser.Tests.LexParse
