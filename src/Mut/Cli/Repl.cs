@@ -46,7 +46,7 @@ namespace Mut.Cli
                 // Otherwise, attempt to parse the command
                 try
                 {
-                    var ast = CommandToMutASTConverter.Convert(command);
+                    var ast = CommandToMutASTConverter.Transform(command);
                     ast.Accept(interpreter);
                 }
                 catch (Exception e)

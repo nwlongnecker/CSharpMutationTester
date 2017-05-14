@@ -69,9 +69,11 @@
     <Compile Include="MutAST\AbstractMutASTVisitor.cs" />
     <Compile Include="MutAST\Nodes\FileType.cs" />
     <Compile Include="MutAST\Nodes\ListNode.cs" />
+    <Compile Include="MutAST\Nodes\ModuleNode.cs" />
     <Compile Include="MutAST\Nodes\MutASTNode.cs" />
     <Compile Include="MutAST\MutASTCreatorVisitor.cs" />
     <Compile Include="MutAST\Nodes\MutateNode.cs" />
+    <Compile Include="MutAST\Nodes\MutFileNode.cs" />
     <Compile Include="MutAST\Nodes\NoopNode.cs" />
     <Compile Include="MutAST\Nodes\ReportNode.cs" />
     <Compile Include="MutAST\Nodes\AddNode.cs" />

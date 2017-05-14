@@ -6,7 +6,7 @@ namespace LexerParser.LexParse
 {
     public class CommandToMutASTConverter
     {
-        public static MutASTNode Convert(string command, IMutatorVisitor<MutASTNode> visitor = null)
+        public static MutASTNode Transform(string command, IMutatorVisitor<MutASTNode> visitor = null)
         {
             if (string.IsNullOrWhiteSpace(command))
             {

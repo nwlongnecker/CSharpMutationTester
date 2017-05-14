@@ -62,7 +62,14 @@ namespace MutDSL.MutAST
 
         public MutASTNode VisitModule([NotNull] MutatorParser.ModuleContext context)
         {
-            throw new NotImplementedException();
+            var id = context.ID().GetText();
+            var mutations = context.mutate();
+            var mutationList = new List<MutASTNode>();
+            foreach(var mutation in mutations)
+            {
+                mutationList.Add(mutation.Accept(this));
+            }
+            return new ModuleNode(id, mutationList);
         }
 
         public MutASTNode VisitMutatable([NotNull] MutatorParser.MutatableContext context)
@@ -91,7 +98,13 @@ namespace MutDSL.MutAST
 
         public MutASTNode VisitMutFile([NotNull] MutatorParser.MutFileContext context)
         {
-            throw new NotImplementedException();
+            var commands = context.command();
+            var commandList = new List<MutASTNode>();
+            foreach(var command in commands)
+            {
+                commandList.Add(command.Accept(this));
+            }
+            return new MutFileNode(commandList);
         }
 
         public MutASTNode VisitRemove([NotNull] MutatorParser.RemoveContext context)

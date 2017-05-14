@@ -1,6 +1,6 @@
 grammar Mutator;
 
-// Parser rules
+/* Parser rules */
 mutFile : 		command* | EOF ;
 
 command :		set
