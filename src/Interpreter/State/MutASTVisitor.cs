@@ -1,16 +1,19 @@
 ﻿using MutDSL.MutAST;
 using MutDSL.MutAST.Nodes;
-using System.IO;
+using Interpreter.Helpers;
+using System.IO.Abstractions;
 
 namespace Interpreter.State
 {
     public class MutASTVisitor : AbstractMutASTVisitor<bool>
     {
         private InterpreterState interpreterState;
+        private IFileSystem fileSystem;
 
-        public MutASTVisitor(InterpreterState interpreterState)
+        public MutASTVisitor(InterpreterState interpreterState, IFileSystem fileSystem)
         {
             this.interpreterState = interpreterState;
+            this.fileSystem = fileSystem;
         }
 
         public override bool Visit(AddNode addNode)
@@ -18,12 +21,27 @@ namespace Interpreter.State
             var successful = true;
             foreach(var fileGlob in addNode.FileGlobs)
             {
-                if (!File.Exists(fileGlob))
+                if (fileSystem.File.Exists(fileGlob))
                 {
-                    successful = false;
-                    continue;
+                    // Return false if any of the files were unsuccessfully added
+                    successful = successful && interpreterState.AddSource(fileGlob);
                 }
-                interpreterState.SourceFiles.Add(fileGlob);
+                else
+                {
+                    var files = FileGlobber.ExpandFileGlob(fileGlob, fileSystem);
+                    foreach (var file in files)
+                    {
+                        if (!fileSystem.File.Exists(file))
+                        {
+                            successful = false;
+                        }
+                        else
+                        {
+                            // Return false if any of the files were unsuccessfully added
+                            successful = successful && interpreterState.AddSource(file);
+                        }
+                    }
+                }
             }
             return successful;
         }

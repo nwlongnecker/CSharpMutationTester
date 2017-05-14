@@ -3,6 +3,7 @@ using LexerParser.LexParse;
 using Mut.Log;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace Mut.Cli
 {
@@ -20,7 +21,7 @@ namespace Mut.Cli
         public void Start(bool shouldLoop = true)
         {
             string command = null;
-            var interpreter = new MutASTVisitor(new InterpreterState());
+            var interpreter = new MutASTVisitor(new InterpreterState(), new FileSystem());
             do
             {
                 // prompt the user for a command

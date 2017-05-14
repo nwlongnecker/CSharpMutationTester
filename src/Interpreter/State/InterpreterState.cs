@@ -10,5 +10,15 @@ namespace Interpreter.State
         {
             SourceFiles = new List<string>();
         }
+
+        internal bool AddSource(string file)
+        {
+            var alreadyContains = SourceFiles.Contains(file);
+            if (!alreadyContains)
+            {
+                SourceFiles.Add(file);
+            }
+            return !alreadyContains;
+        }
     }
 }
