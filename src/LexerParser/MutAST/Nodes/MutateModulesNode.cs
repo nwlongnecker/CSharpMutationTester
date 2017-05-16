@@ -16,5 +16,21 @@ namespace MutDSL.MutAST.Nodes
         {
             return visitor.Visit(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as MutateModulesNode;
+            if (other == null) { return false; }
+            return ListsAreEqual(ModuleIds, other.ModuleIds);
+        }
+
+        public override string ToString()
+        {
+            var properties = new Dictionary<string, string>
+            {
+                { "ModuleIds", StringifyList(ModuleIds) }
+            };
+            return StringifyValues(GetType().ToString(), properties);
+        }
     }
 }

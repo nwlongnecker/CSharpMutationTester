@@ -18,5 +18,22 @@ namespace MutDSL.MutAST.Nodes
         {
             return visitor.Visit(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as AddNode;
+            if (other == null) { return false; }
+            return AddType.Equals(other.AddType) && ListsAreEqual(FileGlobs, other.FileGlobs);
+        }
+
+        public override string ToString()
+        {
+            var properties = new Dictionary<string, string>
+            {
+                { "AddType", AddType.ToString() },
+                { "FileGlobs", StringifyList(FileGlobs) }
+            };
+            return StringifyValues(GetType().ToString(), properties);
+        }
     }
 }

@@ -11,78 +11,60 @@ namespace MutDSL.MutAST.Nodes
     public abstract class MutASTNode
     {
         public abstract T Accept<T>(AbstractMutASTVisitor<T> visitor);
-        
-        /// <summary>
-        /// Use reflection to deep compare each of the public properties
-        /// </summary>
-        /// <param name="obj">Other object to compare to</param>
-        /// <returns>Whether the object is equal to this one</returns>
-        public override bool Equals(object obj)
+
+        // Helper methods so it is easier to override Equals and ToString in subclasses
+        protected bool ListsAreEqual(List<string> listOne, List<string> listTwo)
         {
-            var type = GetType();
-            var isEqual = type.Equals(obj?.GetType());
-            if (isEqual)
-            {
-                var properties = type.GetProperties();
-                foreach (var property in properties)
+            var equal = listOne.Count == listTwo.Count;
+            if (equal) {
+                for (var i = 0; i < listOne.Count; i++)
                 {
-                    if (!PropertiesAreEqual(property, obj))
-                    {
-                        isEqual = false;
-                        break;
-                    }
+                    equal = listOne[i].Equals(listTwo[i]) && equal;
                 }
             }
-            return isEqual;
+            return equal;
         }
 
-        private bool PropertiesAreEqual(PropertyInfo property, object otherObject)
+        protected bool ListsAreEqual(List<MutASTNode> listOne, List<MutASTNode> listTwo)
         {
-            var myProperty = property.GetValue(this);
-            var otherProperty = property.GetValue(otherObject);
-            // If one is null, objects are not equal
-            if (myProperty != null && otherProperty == null ||
-                myProperty == null && otherProperty != null)
+            var equal = listOne.Count == listTwo.Count;
+            if (equal)
             {
-                return false;
+                for (var i = 0; i < listOne.Count; i++)
+                {
+                    equal = listOne[i].Equals(listTwo[i]) && equal;
+                }
             }
-            return myProperty.Equals(otherProperty) ||
-                StringifyPropertyValue(myProperty).Equals(StringifyPropertyValue(otherProperty));
+            return equal;
         }
 
-        /// <summary>
-        /// Uses reflection to print the properties and values of the node in json-similar format
-        /// </summary>
-        /// <returns>A string representation of the object and its properties</returns>
-        public override string ToString()
+        protected string StringifyList(List<string> list)
         {
-            var type = GetType();
-            var properties = type.GetProperties();
+            return '[' + string.Join(",", list) + ']';
+        }
+
+        protected string StringifyList(List<MutASTNode> list)
+        {
+            return '[' + string.Join(",", list.SelectMany(node => node.ToString())) + ']';
+        }
+
+        protected string StringifyValues(string type, Dictionary<string, string> properties)
+        {
             var stringBuilder = new StringBuilder(type.ToString());
-            if (properties.Length > 0)
+            if (properties.Count > 0)
             {
                 stringBuilder.Append('{');
-                foreach(var property in properties)
+                foreach (var property in properties)
                 {
-                    stringBuilder.Append(property.Name);
+                    stringBuilder.Append(property.Key);
                     stringBuilder.Append(':');
-                    stringBuilder.Append(StringifyPropertyValue(property.GetValue(this)));
+                    stringBuilder.Append(property.Value);
                     stringBuilder.Append(',');
                 }
                 stringBuilder.Remove(stringBuilder.Length - 1, 1);
                 stringBuilder.Append('}');
             }
             return stringBuilder.ToString();
-        }
-
-        private string StringifyPropertyValue(object propertyValue)
-        {
-            var listValue = propertyValue as IList<string>;
-            if (listValue != null)
-            {
-                return '[' + string.Join(",", listValue) + ']';
-            }
-            return propertyValue?.ToString();
         }
     }
 }

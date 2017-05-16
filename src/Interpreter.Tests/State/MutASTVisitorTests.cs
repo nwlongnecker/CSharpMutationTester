@@ -27,7 +27,7 @@ namespace Interpreter.Tests.State
         [OneTimeSetUp]
         public void SetupFixture()
         {
-            fileSystem = new FileSystem();
+            fileSystem = new MockFileSystem();
 
             fileSystem.Directory.CreateDirectory(BASE_DIR);
             fileSystem.Directory.CreateDirectory(SOURCE_DIR);
@@ -59,9 +59,9 @@ namespace Interpreter.Tests.State
         [Test]
         public void AddSourceFilesWithGlob_UpdatesState()
         {
-            var files = new List<string> { SOURCE_DIR + "*" };
+            var files = new List<string> { SOURCE_DIR + "*1.cs" };
             var node = new AddNode(FileType.SOURCE, files);
-            var expandedFiles = new List<string> { SOURCE_FILE2, SOURCE_FILE1 };
+            var expandedFiles = new List<string> { SOURCE_FILE1 };
             Assert.True(node.Accept(visitor), "Expected visitor to be successful");
             Assert.True(expandedFiles.SequenceEqual(state.SourceFiles), ExpectedEqualSequencesMessage(expandedFiles, state.SourceFiles));
         }
@@ -81,7 +81,7 @@ namespace Interpreter.Tests.State
         public void AddSourceFilesAlreadyAdded_NoDuplicate()
         {
             state.SourceFiles = new List<string> { SOURCE_FILE1 };
-            var files = new List<string> { SOURCE_DIR + "*" };
+            var files = new List<string> { SOURCE_FILE1, SOURCE_FILE2 };
             var node = new AddNode(FileType.SOURCE, files);
             var expandedFiles = new List<string> { SOURCE_FILE1, SOURCE_FILE2 };
             // Visitor should return false if any of the files were not added

@@ -18,5 +18,22 @@ namespace MutDSL.MutAST.Nodes
         {
             return visitor.Visit(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as MutateNode;
+            if (other == null) { return false; }
+            return ListsAreEqual(MutateFromSymbols, other.MutateFromSymbols) && ListsAreEqual(MutateToSymbols, other.MutateToSymbols);
+        }
+
+        public override string ToString()
+        {
+            var properties = new Dictionary<string, string>
+            {
+                { "MutateFromSymbols", StringifyList(MutateFromSymbols) },
+                { "MutateToSymbols", StringifyList(MutateToSymbols) }
+            };
+            return StringifyValues(GetType().ToString(), properties);
+        }
     }
 }

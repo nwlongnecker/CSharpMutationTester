@@ -23,8 +23,8 @@ namespace Interpreter.State
             {
                 if (fileSystem.File.Exists(fileGlob))
                 {
-                    // Return false if any of the files were unsuccessfully added
-                    successful = successful && interpreterState.AddSource(fileGlob);
+                    // Attempt to add all files, but return false if any of the files were unsuccessfully added
+                    successful = interpreterState.AddSource(fileGlob) && successful;
                 }
                 else
                 {
@@ -37,8 +37,8 @@ namespace Interpreter.State
                         }
                         else
                         {
-                            // Return false if any of the files were unsuccessfully added
-                            successful = successful && interpreterState.AddSource(file);
+                            // Attempt to add all files, but return false if any of the files were unsuccessfully added
+                            successful = interpreterState.AddSource(file) && successful;
                         }
                     }
                 }
