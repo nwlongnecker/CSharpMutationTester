@@ -1,5 +1,5 @@
 ﻿using Mut.Cli;
-using Mut.Log;
+using Interpreter.Log;
 using NUnit.Framework;
 using System.IO;
 

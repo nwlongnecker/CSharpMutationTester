@@ -47,6 +47,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Interpreter\Interpreter.csproj">
+      <Project>{70c9c77b-ac29-472f-a1ec-c760971069e9}</Project>
+      <Name>Interpreter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LexerParser\LexerParser.csproj">
       <Project>{ca86e8ad-f991-4f36-9701-d187aabce2b5}</Project>
       <Name>LexerParser</Name>

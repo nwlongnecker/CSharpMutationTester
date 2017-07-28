@@ -1,4 +1,4 @@
-﻿using Mut.Log;
+﻿using Interpreter.Log;
 using System;
 
 namespace Mut.Cli

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Mut.Log
+namespace Interpreter.Log
 {
     public class Output
     {
@@ -20,17 +20,17 @@ namespace Mut.Log
             _writer.WriteLine(prompt);
         }
 
-        internal void Prompt(string prompt)
+        public void Prompt(string prompt)
         {
             _writer.Write(prompt);
         }
 
-        internal void Info(string info)
+        public void Info(string info)
         {
             _writer.WriteLine(info);
         }
 
-        internal void Error(string error)
+        public void Error(string error)
         {
             _writer.WriteLine(error);
         }

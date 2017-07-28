@@ -1,4 +1,5 @@
-﻿using Interpreter.State;
+﻿using Interpreter.Log;
+using Interpreter.State;
 using MutDSL.MutAST.Nodes;
 using NUnit.Framework;
 using System;
@@ -30,7 +31,7 @@ namespace Interpreter.Tests.State
         public void SetUp()
         {
             state = new InterpreterState();
-            visitor = new MutASTVisitor(state);
+            visitor = new MutASTVisitor(state, new Output());
         }
 
         [Test]
