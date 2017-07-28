@@ -20,7 +20,7 @@ If(!$cakeFile) {
 $cakePath = Join-Path $env:ChocolateyInstall "bin\cake.exe"
 
 function callCake($task) {
-    If ($task.Equals("help") -or $task.Equals("--help")) {
+    If ($task -and ($task.Equals("help") -or $task.Equals("--help"))) {
         & $cakePath "--showdescription"
         return
     }

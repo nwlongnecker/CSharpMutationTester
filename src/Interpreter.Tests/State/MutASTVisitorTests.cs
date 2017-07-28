@@ -42,7 +42,7 @@ namespace Interpreter.Tests.State
             Assert.True(files.SequenceEqual(state.SourceFiles), ExpectedEqualSequencesMessage(files, state.SourceFiles));
         }
 
-        [Test]
+        [Test, Ignore("Next test to work on")]
         public void AddSourceFilesWithGlob_UpdatesState()
         {
             var files = new List<string> { TEST_DIR + "*" };
