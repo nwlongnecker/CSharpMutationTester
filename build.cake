@@ -79,6 +79,7 @@ Task("Generate")
     process.WaitForExit();
     if (process.ExitCode != 0) {
         Error(output);
+        throw new Exception("Generation failed");
     }
     else {
         Information("Generation successful");
@@ -90,7 +91,7 @@ Task("DirtyBuild")
     .Does(() =>
 {
     MSBuild(solutionFile, settings =>
-      settings.SetConfiguration(configuration));
+        settings.SetConfiguration(configuration));
 });
 
 Task("Build")
