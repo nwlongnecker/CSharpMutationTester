@@ -34,7 +34,7 @@ namespace LexerParser.Tests.LexParse
         public void CompleteCommand_DoesNotThrow()
         {
             Assert.DoesNotThrow(() => {
-                BuildParser("source: myfile.txt").command();
+                BuildParser("set source myfile.txt").command();
             });
         }
 
@@ -42,7 +42,7 @@ namespace LexerParser.Tests.LexParse
         public void SourceCommandFileGlob_DoesNotThrow()
         {
             Assert.DoesNotThrow(() => {
-                BuildParser("source: .\\src\\*.cs").command();
+                BuildParser("set source .\\src\\*.cs").command();
             });
         }
 
@@ -50,7 +50,7 @@ namespace LexerParser.Tests.LexParse
         public void TestCommandQuotedFileGlob_DoesNotThrow()
         {
             Assert.DoesNotThrow(() => {
-                BuildParser("test: '.\\tests?\\*\\*Test.cs'").command();
+                BuildParser("set test '.\\tests?\\*\\*Test.cs'").command();
             });
         }
 
@@ -213,6 +213,22 @@ namespace LexerParser.Tests.LexParse
         {
             Assert.DoesNotThrow(() => {
                 BuildParser("report last '*.cs'").command();
+            });
+        }
+
+        [Test]
+        public void RelativePathFileGlob_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => {
+                BuildParser("add source '.\\scripts\\Alias-Cake.ps1'").command();
+            });
+        }
+
+        [Test]
+        public void FullPathFileGlob_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => {
+                BuildParser("add source C:/a.txt").command();
             });
         }
     }

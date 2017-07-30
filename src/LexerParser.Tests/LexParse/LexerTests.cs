@@ -22,11 +22,11 @@ namespace LexerParser.Tests.LexParse
         }
 
         [Test]
-        public void Colon_Lexes()
+        public void Set_Lexes()
         {
-            var tokens = BuildLexer(":").GetAllTokens();
+            var tokens = BuildLexer("set").GetAllTokens();
             Assert.AreEqual(1, tokens.Count);
-            Assert.AreEqual(MutatorLexer.COLON, tokens.First().Type);
+            Assert.AreEqual(MutatorLexer.SET, tokens.First().Type);
         }
 
         [Test]

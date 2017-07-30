@@ -61,7 +61,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void SetSourceFileList_CorrectTree()
         {
-            var ast = Transform("source: .\\src/*/*.cs");
+            var ast = Transform("set source .\\src/*/*.cs");
             var fileGlob = new List<string> { ".\\src/*/*.cs" };
             Assert.AreEqual(new SetNode(FileType.SOURCE, fileGlob), ast);
         }
@@ -69,7 +69,7 @@ namespace LexerParser.Tests.MutAST
         [Test]
         public void SetTestFileList_CorrectTree()
         {
-            var ast = Transform("test: .\\test/*/*Test.cs");
+            var ast = Transform("set test .\\test/*/*Test.cs");
             var fileGlob = new List<string> { ".\\test/*/*Test.cs" };
             Assert.AreEqual(new SetNode(FileType.TEST, fileGlob), ast);
         }

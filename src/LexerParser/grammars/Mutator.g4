@@ -12,7 +12,7 @@ command :		set
 				| mutate
 				| report ;
 
-set :			(SOURCE | TEST) COLON fileList ;
+set :			SET (SOURCE | TEST) fileList ;
 use :			USE fileList ;
 
 add :			ADD (SOURCE | TEST) fileList ;
@@ -34,13 +34,13 @@ fileList :		FILEGLOB (COMMA FILEGLOB)* ;
 
 // Separators and operators
 COMMA :			',' ;
-COLON :			':' ;
 
 // Reserved words
 SOURCE :		'source' ;
 TEST :			'test' ;
 USE :			'use' ;
 ADD :			'add' ;
+SET :			'set' ;
 REMOVE :		'remove' ;
 LIST :			'list' ;
 MODULE :		'module' ;
@@ -63,7 +63,7 @@ FILEGLOB :		FILEGLOBBASE |
 				DOUBLEQUOTE FILEGLOBWSBASE DOUBLEQUOTE ;
 
 // Match anything from symbol like && or >= to a full regex
-SYMBOL :		(~[ \t\r\n#,:'"])+ |
+SYMBOL :		(~[ \t\r\n#,'"])+ |
 				QUOTE (~['])* QUOTE |
 				DOUBLEQUOTE (~["])* DOUBLEQUOTE ;
 
@@ -76,9 +76,9 @@ fragment
 FILEGLOBWSBASE:	(DIRNAMEWS SLASH)* DIRNAMEWS SLASH? ;
 fragment
 DIRNAMEWS :		FILEGLOBCHAR |
-				FILEGLOBCHAR (FILEGLOBCHAR | SPACE)* FILEGLOBCHAR ;
+				FILEGLOBCHAR (FILEGLOBCHAR | SPACE | DASH)* FILEGLOBCHAR ;
 fragment
-FILEGLOBCHAR :	LETTER | DIGIT | UNDERSCORE | DOT | STAR | QUESTION ;
+FILEGLOBCHAR :	LETTER | DIGIT | UNDERSCORE | DOT | STAR | QUESTION | COLON ;
 
 fragment
 UNDERSCORE :	'_' ;
@@ -96,6 +96,10 @@ fragment
 SPACE :			' ' ;
 fragment
 QUESTION :		'?' ;
+fragment
+COLON :			':' ;
+fragment
+DASH :			'\u002D' ;
 
 fragment
 LETTER :		[A-Za-z] ;
